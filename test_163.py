@@ -15,7 +15,7 @@ CN_STOCK = os.path.join(os.path.split( os.path.realpath(__file__))[0],"cn_stock.
 def get_daily(code,start='19900101',end=''):
     url_mod="http://quotes.money.163.com/service/chddata.html?code=%s&start=%s&end=%s"
     url=url_mod%(code,start,end)
-    df=pd.read_csv(url, encoding = 'gb2312')
+    df=pd.read_csv(url, encoding = 'gbk')
     return df
  
 def test0():
