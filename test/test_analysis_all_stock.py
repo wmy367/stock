@@ -35,7 +35,7 @@ import stock_arima
 
 CN_STOCK = os.path.join(os.path.split( os.path.realpath(__file__))[0],"../cn_stock.csv")
 
-def all_stock_als():
+def all_stock_als(filename='temp_all_stock_analysis.csv'):
     end_date = datetime.date.today().__format__('%Y-%m-%d')
     df = pd.read_csv(CN_STOCK, index_col=0)
     start = 0
@@ -51,6 +51,8 @@ def all_stock_als():
                             FutureWarning)
     warnings.filterwarnings('ignore', 'statsmodels.tsa.arima_model.ARIMA',
                             FutureWarning)
+    with open(filename,'w') as f:
+        f.write("code,name,buyPoints,matchUp,noMathUp\n")
 
     for index in range(start,len(df['ts_code'])):
         n = df['ts_code'][index]
@@ -77,12 +79,17 @@ def all_stock_als():
                 allDF['buyPoints'].append(rel['buyPoints'])
                 allDF['matchUp'].append(rel['matchUp'])
                 allDF['noMathUp'].append(rel['noMathUp'])
+
+                with open(filename,'a') as f:
+                    f.write("{},{},{},{},{}\n".format(code,df['name'][index],rel['buyPoints'],rel['matchUp'],rel['noMathUp']))
             else:
                 allDF['name'].append(df['name'][index])
                 allDF['code'].append(np.nan)
                 allDF['buyPoints'].append(np.nan)
                 allDF['matchUp'].append(np.nan)
                 allDF['noMathUp'].append(np.nan)
+                with open(filename,'a') as f:
+                    f.write("{},{},{},{},{}\n".format(code,df['name'][index],'Nan','Nan','Nan'))
 
 
     return pd.DataFrame(allDF)

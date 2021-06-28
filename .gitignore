@@ -5,3 +5,4 @@ tushare_token
 *.txt
 state/FullFlowImage/
 state/images/
+temp*.csv
