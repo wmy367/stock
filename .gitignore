@@ -1,3 +1,7 @@
 __pycache__
 *.sqlite3
 tushare_token
+*.log
+*.txt
+state/FullFlowImage/
+state/images/

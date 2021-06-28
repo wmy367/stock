@@ -63,7 +63,7 @@ def dayStockToDateBase(db_engine=None,clg=None,code="sh.600000",start_date='2021
     # 详细指标参数，参见“历史行情指标参数”章节；“分钟线”参数与“日线”参数不同。“分钟线”不包含指数。
     # 分钟线指标：date,time,code,open,high,low,close,volume,amount,adjustflag
     # 周月线指标：date,code,open,high,low,close,volume,amount,adjustflag,turn,pctChg
-    rs = bs.query_history_k_data_plus("sh.600000",
+    rs = bs.query_history_k_data_plus(code,
         "date,code,open,high,low,close,preclose,volume,amount,adjustflag,turn,tradestatus,pctChg,isST",
         start_date=start_date, end_date=end_date,
         frequency="d", adjustflag="3")
@@ -117,9 +117,10 @@ def dayStockToDateBase(db_engine=None,clg=None,code="sh.600000",start_date='2021
     if not clg:
         bs.logout()
 
-def dayTableFromeDataBase(code="sh.60000"):
-    df = pd.read_sql("SELECT * FROM stock_day WHERE code = '%s';"%code, db.ENGINE, index_col=None, coerce_float=False, params=None, parse_dates=None, columns=None, chunksize=None)
-    print(df)
+def dayTableFromeDataBase(db_engin=db.ENGINE,code="sh.600000"):
+    df = pd.read_sql("SELECT * FROM baostock_day WHERE code = '%s';"%code, db_engin, index_col=None, coerce_float=False, params=None, parse_dates=None, columns=None, chunksize=None)
+    # print(df)
+    return df
 
 
 def test3():

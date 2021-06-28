@@ -87,7 +87,7 @@ def dailyToDatabase(code="1000001",start='19900101',end=''):
 
     ndf = pd.DataFrame(ndf)
     ndf[['close','high','low','open','preclose','pctChV','pctChg','turn','amount','total','shareTotal']] = ndf[['close','high','low','open','preclose','pctChV','pctChg','turn','amount','total','shareTotal']].astype(float)
-
+    ndf['vid'] = ndf['date'] + code
     dtype = {
         'date': Date,
         'code': (String(32)),
@@ -105,7 +105,8 @@ def dailyToDatabase(code="1000001",start='19900101',end=''):
         'pctChV' : Float,
         'total': Float,
         'shareTotal': Float,
-        'anum': Integer()
+        'anum': Integer(),
+        'vid': String(32)
     }
     ndf['date'] = [ datetime.datetime.strptime(x,'%Y-%m-%d') for x in ndf['date']]
     ndf.to_sql("stock_163_daily", db.ENGINE, schema=None, if_exists='append', index=False, index_label=None, chunksize=None, dtype=dtype, method=None)
